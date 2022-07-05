@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <Platforms>x64</Platforms>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <Version>1.0.0</Version>
+    <Product>Screenshot Location and Metadata</Product>
+    <AssemblyTitle>Screenshot Location and Metadata</AssemblyTitle>
+    <Authors>Max Kagamine</Authors>
+    <Copyright>Copyright 2022 Max Kagamine</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="publish\**" />
+    <EmbeddedResource Remove="publish\**" />
+    <None Remove="publish\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ExifLibNet" Version="2.1.4" />
+    <PackageReference Include="ILRepack" Version="2.0.18" />
+    <PackageReference Include="ImageSizeReader" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="NetScriptFramework">
+      <HintPath>lib\NetScriptFramework\NetScriptFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="NetScriptFramework.SkyrimSE">
+      <HintPath>lib\NetScriptFramework\NetScriptFramework.SkyrimSE.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <PropertyGroup>
+      <PluginsDir>publish\Data\NetScriptFramework\Plugins\</PluginsDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <PluginLib Include="$(OutputPath)ExifLibrary.dll" />
+      <PluginLib Include="$(OutputPath)ImageSizeReader.dll" />
+    </ItemGroup>
+    <RemoveDir Directories="publish" />
+    <Exec Command="$(ILRepack) /out:$(PluginsDir)$(AssemblyName).dll $(OutputPath)$(AssemblyName).dll @(PluginLib, ' ')" Condition="'$(Configuration)' == 'Release'" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(PluginsDir)" Condition="'$(Configuration)' == 'Debug'" />
+    <Copy SourceFiles="@(PluginLib)" DestinationFolder="$(PluginsDir)Lib" Condition="'$(Configuration)' == 'Debug'" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).pdb" DestinationFolder="$(PluginsDir)" />
+    <Copy SourceFiles="$(AssemblyName).config.txt" DestinationFolder="$(PluginsDir)" />
+    <ZipDirectory SourceDirectory="publish\Data" DestinationFile="publish\$(AssemblyName)-$(Version).zip" Condition="'$(Configuration)' == 'Release'" />
+  </Target>
+
+</Project>

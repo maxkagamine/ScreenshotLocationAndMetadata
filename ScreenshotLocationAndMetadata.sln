@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreenshotLocationAndMetadata", "ScreenshotLocationAndMetadata.csproj", "{DD34B3BD-01E0-4857-A0F5-CDC38BDD9EEE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD34B3BD-01E0-4857-A0F5-CDC38BDD9EEE}.Debug|x64.ActiveCfg = Debug|x64
+		{DD34B3BD-01E0-4857-A0F5-CDC38BDD9EEE}.Debug|x64.Build.0 = Debug|x64
+		{DD34B3BD-01E0-4857-A0F5-CDC38BDD9EEE}.Release|x64.ActiveCfg = Release|x64
+		{DD34B3BD-01E0-4857-A0F5-CDC38BDD9EEE}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1C674135-5125-47F7-A975-F6AA3299C738}
+	EndGlobalSection
+EndGlobal
