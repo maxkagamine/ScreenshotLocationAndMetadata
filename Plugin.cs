@@ -147,17 +147,22 @@ namespace ScreenshotLocationAndMetadata
                 {
                     using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
                     {
-                        if (stream.Length > 0)
+                        if (stream.Length == 0)
                         {
-                            return;
+                            throw new IOException("The screenshot file is empty. This could be a bug in ENB.");
                         }
+
+                        return;
                     }
                 }
                 catch (IOException ex)
                 {
                     if (timeoutSeconds-- == 0)
                     {
-                        throw new TimeoutException("Either the screenshot is taking an exceptionally long time to save, or something is preventing us from accessing the file. Perhaps the inner exception below will be of use.", ex);
+                        throw new TimeoutException(
+                            "Either the screenshot is taking an exceptionally long time to save, or something is " +
+                            "preventing us from accessing the file. Perhaps the inner exception below will be of use.",
+                            ex);
                     }
 
                     Thread.Sleep(TimeSpan.FromSeconds(1));
